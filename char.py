@@ -23,6 +23,9 @@ class Character:
     gender: str = None
     race: str   = None
     trait: str  = None
+    
+    height: int = None
+    weight: int = None
 
     str: int    = None
     dex: int    = None
@@ -48,13 +51,15 @@ class Character:
     def dict(self):
         return asdict(self)
 
-def character_random() -> Character:
+def char_random() -> Character:
     """Create a completely random character"""
     ch = Character()
     ch.id = get_cid()
     ch.gender = random.choice(["M", "W"])
     ch.name = random.choice(names[ch.gender])
     ch.race = "Human"
+    ch.height = (59 if gender == "M" else 53) + ndx(2, 10)
+    ch.weight = (140 if gender == "M" else 100) + ndx(6, 10)
 
     ch.trait = random.choice(traits.table)
 
