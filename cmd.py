@@ -1,7 +1,7 @@
 from enum import Enum
-import char
-from state import chars
+from char import char_random
 import dice
+from state import State
 
 
 SUCCESS = 0
@@ -10,12 +10,12 @@ ERR = 2
 
 
 
-def mon_quit(argc: int, argv: [str]) -> int:
+def mon_quit(argc: int, argv: [str], state: State) -> int:
     """ Quit the program using the QUIT return flag"""
     return QUIT
     
 
-def mon_help(argc: int, argv: [str]) -> int:
+def mon_help(argc: int, argv: [str], state: State) -> int:
     """ Print help list"""
     for name, (_, desc) in cmds.items():
         print(f"{name}:\t{desc} ", end="")
@@ -27,22 +27,20 @@ def mon_help(argc: int, argv: [str]) -> int:
     return SUCCESS
 
 
-def mon_newcharacter(argc: int, argv: [str]) -> int:
+def mon_newcharacter(argc: int, argv: [str], state: State) -> int:
     """ Make a new character and add it to state.chars"""
-    global chars
     nchar = 1
     if argc > 1:
         nchar = int(argv[1])
     for i in range(nchar):
-        chars.append(char.character_random())
+        state.chars.append(char_random())
     return SUCCESS
 
 
-def mon_displaycharacters(argc: int, argv: [str]) -> int:
+def mon_displaycharacters(argc: int, argv: [str], state: State) -> int:
     """ Display all characters in a list"""
     print(f"name       g race\tstr dex con int wis cha \ttrait")
-    for char in chars:
-        
+    for char in state.chars:
         print(f"{char.name:<11}{char.gender} {char.race}\t", end="")
         for s in char.stat:
             print(f"{s:3n} ", end="")
@@ -51,7 +49,7 @@ def mon_displaycharacters(argc: int, argv: [str]) -> int:
         print()
 
 
-def mon_roll(argc: int, argv: [str]) -> int:
+def mon_roll(argc: int, argv: [str], state: State) -> int:
     """ Roll a dice """
     if argc != 3:
         print("Bad args")

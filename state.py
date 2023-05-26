@@ -1,3 +1,7 @@
-import char
+from dataclasses import dataclass
 
-chars = []
+from char import Character
+
+@dataclass
+class State:
+    chars:[Character]

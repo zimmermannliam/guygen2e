@@ -1,5 +1,6 @@
 """ Main functionality for guygen, including monitor"""
 import cmd
+from state import State
 
 def main():
     """ Main for all guygen"""
@@ -10,9 +11,9 @@ def monitor():
     """ Run monitor in a loop, taking user input and running the corresponding cmd"""
     ret = None
     last_cmd = ""
+    state = State([])
     while ret != cmd.QUIT:
         cmd_str = input("> ")
-        
 
         # whitespace input
         if cmd_str.strip() == "":
@@ -31,7 +32,7 @@ def monitor():
             cmd_args[0] = cmd.cmd_alt_names[cmd_args[0]]
 
         if cmd_args[0] in cmd.cmds:
-            ret = cmd.cmds[cmd_args[0]][0](len(cmd_args), cmd_args)
+            ret = cmd.cmds[cmd_args[0]][0](len(cmd_args), cmd_args, state)
         else:
             print("Error: Command not found")
 
