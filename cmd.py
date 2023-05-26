@@ -1,10 +1,14 @@
 from enum import Enum
 import char
 from state import chars
+import dice
+
 
 SUCCESS = 0
 QUIT = 1
 ERR = 2
+
+
 
 def mon_quit(argc: int, argv: [str]) -> int:
     """ Quit the program using the QUIT return flag"""
@@ -22,6 +26,7 @@ def mon_help(argc: int, argv: [str]) -> int:
             
     return SUCCESS
 
+
 def mon_newcharacter(argc: int, argv: [str]) -> int:
     """ Make a new character and add it to state.chars"""
     global chars
@@ -31,6 +36,7 @@ def mon_newcharacter(argc: int, argv: [str]) -> int:
     for i in range(nchar):
         chars.append(char.character_random())
     return SUCCESS
+
 
 def mon_displaycharacters(argc: int, argv: [str]) -> int:
     """ Display all characters in a list"""
@@ -44,17 +50,27 @@ def mon_displaycharacters(argc: int, argv: [str]) -> int:
         print(char.trait, end="")
         print()
 
+
+def mon_roll(argc: int, argv: [str]) -> int:
+    """ Roll a dice """
+    if argc != 3:
+        print("Bad args")
+        return ERR
+    print(dice.ndx(int(argv[1]), int(argv[2])))
+
+
 cmd_alt_names = {
     "h"     : "help",
     "q"     : "quit",
     "nc"    : "newcharacter",
-    "dc"    : "displaycharacters"
+    "dc"    : "displaycharacters",
+    "r"     : "roll"
 }
 
 cmds = {
     "help"          : (mon_help, "This command"),
     "quit"          : (mon_quit, "Quit the program"),
     "newcharacter"  : (mon_newcharacter, "Create a new character"),
-    "displaycharacters" : (mon_displaycharacters, "Display all characters in state")
-
+    "displaycharacters" : (mon_displaycharacters, "Display all characters in state"),
+    "roll"          : (mon_roll, "(2 args) Roll ndx")
 }
