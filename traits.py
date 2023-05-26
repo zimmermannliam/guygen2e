@@ -23,6 +23,7 @@ table = [
 "Dreamy",
 "Lacking common sense",
 "Insensitive",
+"Courageous",
 "Brave",
 "Craven",
 "Shy",
