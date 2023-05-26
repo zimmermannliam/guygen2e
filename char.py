@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import random
 from dice import ndx
 import traits
@@ -47,10 +47,6 @@ class Character:
         self.wis = value[4]
         self.cha = value[5]
 
-    @property
-    def dict(self):
-        return asdict(self)
-
 def char_random() -> Character:
     """Create a completely random character"""
     ch = Character()
@@ -58,8 +54,8 @@ def char_random() -> Character:
     ch.gender = random.choice(["M", "W"])
     ch.name = random.choice(names[ch.gender])
     ch.race = "Human"
-    ch.height = (59 if gender == "M" else 53) + ndx(2, 10)
-    ch.weight = (140 if gender == "M" else 100) + ndx(6, 10)
+    ch.height = (59 if ch.gender == "M" else 53) + ndx(2, 10)
+    ch.weight = (140 if ch.gender == "M" else 100) + ndx(6, 10)
 
     ch.trait = random.choice(traits.table)
 
