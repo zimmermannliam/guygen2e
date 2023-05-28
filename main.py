@@ -15,16 +15,16 @@ def monitor():
     while ret != cmd.QUIT:
         cmd_str = input("> ")
 
-        # whitespace input
-        if cmd_str.strip() == "":
-            continue
-        
         # ! input
         temp_cmd = cmd_str
         if cmd_str.strip() == "!":
             cmd_str = last_cmd
-        else:
+        elif cmd_str.strip() != "":
             last_cmd = temp_cmd
+
+        # whitespace input
+        if cmd_str.strip() == "":
+            continue
 
         cmd_args = cmd_str.split()
 
@@ -32,7 +32,7 @@ def monitor():
             cmd_args[0] = cmd.cmd_alt_names[cmd_args[0]]
 
         if cmd_args[0] in cmd.cmds:
-            ret = cmd.cmds[cmd_args[0]][0](len(cmd_args), cmd_args, state)
+            ret = cmd.cmds[cmd_args[0]][0](cmd_args, state)
         else:
             print("Error: Command not found")
 

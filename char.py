@@ -8,13 +8,6 @@ names = {   "M": ["John", "Jack", "Sam", "Ezekiel"],
         }
 
 
-cid = 0
-def get_cid() -> int:
-    ''' Character id generator'''
-    global cid
-    cid += 1
-    return cid
-
 @dataclass
 class Character:
     """ A PC or NPC. Most things are optional, default None."""
@@ -35,11 +28,11 @@ class Character:
     cha: int    = None
 
     @property
-    def stat(self):
+    def stats(self):
         return [self.str, self.dex, self.con, self.int, self.wis, self.cha]
 
-    @stat.setter
-    def stat(self, value):
+    @stats.setter
+    def stats(self, value):
         self.str = value[0]
         self.dex = value[1]
         self.con = value[2]
@@ -47,10 +40,10 @@ class Character:
         self.wis = value[4]
         self.cha = value[5]
 
-def char_random() -> Character:
+def char_random(cid) -> Character:
     """Create a completely random character"""
     ch = Character()
-    ch.id = get_cid()
+    ch.id = cid
     ch.gender = random.choice(["M", "W"])
     ch.name = random.choice(names[ch.gender])
     ch.race = "Human"
@@ -59,6 +52,6 @@ def char_random() -> Character:
 
     ch.trait = random.choice(traits.table)
 
-    ch.stat = [ndx(3, 6) for _ in range(6)]
+    ch.stats = [ndx(3, 6) for _ in range(6)]
     return ch
 
